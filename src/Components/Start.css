@@ -1,0 +1,14 @@
+/* wrapper della pagina */
+.start-page {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* selettore corretto per il tuo JSX */
+.start-page .title-container {
+  position: absolute;
+  inset: 0; /* full screen */
+  display: grid;
+  z-index: 1; /* sopra al canvas */
+  pointer-events: none; /* i click passano al background */
+}

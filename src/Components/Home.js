@@ -16,11 +16,9 @@ const Home = () => {
   const [cellSize, setCellSize] = useState(10); // zoom (px per cella)
   const [showGrid, setShowGrid] = useState(true);
 
-  // colori
-  const [reduceColors, setReduceColors] = useState(false);
-  const [levelsPerChannel, setLevelsPerChannel] = useState(8);
-  const [snapPalette, setSnapPalette] = useState(false);
-  const [paletteText, setPaletteText] = useState("#000000, #FFFFFF");
+  // griglia (nuovo: colore + opacità)
+  const [gridColor, setGridColor] = useState("#000000"); // default come prima (nero)
+  const [gridOpacity, setGridOpacity] = useState(0.25); // default 0.25
 
   // canvas
   const hiddenCanvasRef = useRef(null); // sampling (w×h)
@@ -64,17 +62,7 @@ const Home = () => {
     }
   }
 
-  // ---- Palette parsing ----
-  const palette = useMemo(() => {
-    if (!snapPalette) return null;
-    const hexes = paletteText
-      .split(/[\n,;\s]+/)
-      .map((s) => s.trim())
-      .filter(Boolean);
-    return hexes.map(hexToRgb).filter((c) => !!c);
-  }, [paletteText, snapPalette]);
-
-  // ---- Genera matrice pixel quantizzati (w×h) ----
+  // ---- Genera matrice pixel (w×h) ----
   const pixelMatrix = useMemo(() => {
     if (!imgObj || !targetW || !targetH) return null;
 
@@ -96,31 +84,16 @@ const Home = () => {
       const row = [];
       for (let x = 0; x < targetW; x++) {
         const i = (y * targetW + x) * 4;
-        let r = data[i + 0];
-        let g = data[i + 1];
-        let b = data[i + 2];
+        const r = data[i + 0];
+        const g = data[i + 1];
+        const b = data[i + 2];
         const a = data[i + 3];
-
-        if (reduceColors) {
-          const step = 256 / levelsPerChannel;
-          r = clamp(Math.round(Math.floor(r / step) * step + step / 2), 0, 255);
-          g = clamp(Math.round(Math.floor(g / step) * step + step / 2), 0, 255);
-          b = clamp(Math.round(Math.floor(b / step) * step + step / 2), 0, 255);
-        }
-
-        if (palette && palette.length) {
-          const near = nearestColor({ r, g, b }, palette);
-          r = near.r;
-          g = near.g;
-          b = near.b;
-        }
-
         row.push({ r, g, b, a });
       }
       matrix.push(row);
     }
     return matrix;
-  }, [imgObj, targetW, targetH, reduceColors, levelsPerChannel, palette]);
+  }, [imgObj, targetW, targetH]);
 
   // ---- Disegno anteprima ----
   useEffect(() => {
@@ -140,8 +113,25 @@ const Home = () => {
         ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
       }
     }
-    if (showGrid) drawGrid(ctx, canvas.width, canvas.height, cellSize);
-  }, [pixelMatrix, cellSize, showGrid, targetW, targetH]);
+    if (showGrid) {
+      drawGrid(
+        ctx,
+        canvas.width,
+        canvas.height,
+        cellSize,
+        gridColor,
+        gridOpacity
+      );
+    }
+  }, [
+    pixelMatrix,
+    cellSize,
+    showGrid,
+    targetW,
+    targetH,
+    gridColor,
+    gridOpacity,
+  ]);
 
   // ---- Export ----
   function onExportPNG() {
@@ -204,15 +194,11 @@ const Home = () => {
         setCellSize={setCellSize}
         showGrid={showGrid}
         setShowGrid={setShowGrid}
-        // colori
-        reduceColors={reduceColors}
-        setReduceColors={setReduceColors}
-        levelsPerChannel={levelsPerChannel}
-        setLevelsPerChannel={setLevelsPerChannel}
-        snapPalette={snapPalette}
-        setSnapPalette={setSnapPalette}
-        paletteText={paletteText}
-        setPaletteText={setPaletteText}
+        // griglia
+        gridColor={gridColor}
+        setGridColor={setGridColor}
+        gridOpacity={gridOpacity}
+        setGridOpacity={setGridOpacity}
         // export/info
         finalSize={finalSize}
         hasImage={!!imgObj}
@@ -260,10 +246,13 @@ const Home = () => {
 export default Home;
 
 // ==== Helpers ====
-function drawGrid(ctx, w, h, cell) {
+// TUA griglia, identica ma parametrica (colore + opacità)
+function drawGrid(ctx, w, h, cell, color = "#000000", opacity = 0.25) {
   ctx.save();
-  ctx.strokeStyle = "rgba(0,0,0,0.25)";
+  const rgb = hexToRgb(color) || { r: 0, g: 0, b: 0 };
+  ctx.strokeStyle = `rgba(${rgb.r},${rgb.g},${rgb.b},${opacity})`;
   ctx.lineWidth = 1;
+
   for (let x = 0; x <= w; x += cell) {
     ctx.beginPath();
     ctx.moveTo(x + 0.5, 0);
@@ -277,10 +266,6 @@ function drawGrid(ctx, w, h, cell) {
     ctx.stroke();
   }
   ctx.restore();
-}
-
-function clamp(n, min, max) {
-  return Math.max(min, Math.min(max, n));
 }
 
 function rgbToHex(r, g, b) {
@@ -307,22 +292,6 @@ function hexToRgb(hex) {
     g: (intVal >> 8) & 255,
     b: intVal & 255,
   };
-}
-
-function nearestColor(c, palette) {
-  let best = palette[0];
-  let bestD = Number.POSITIVE_INFINITY;
-  for (const p of palette) {
-    const d =
-      (c.r - p.r) * (c.r - p.r) +
-      (c.g - p.g) * (c.g - p.g) +
-      (c.b - p.b) * (c.b - p.b);
-    if (d < bestD) {
-      bestD = d;
-      best = p;
-    }
-  }
-  return best;
 }
 
 function downloadText(text, filename) {
