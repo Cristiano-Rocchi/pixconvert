@@ -1,14 +1,52 @@
-/* wrapper della pagina */
 .start-page {
   position: relative;
-  min-height: 100vh;
+  overflow: hidden;
+}
+.start-container {
+  position: absolute;
+  inset: 0; /* occupa tutto */
+  gap: 10rem;
+  pointer-events: none;
+}
+.title-container {
+  display: grid; /* facile da centrare */
+  place-items: center; /* centra al centro */
+  text-align: center;
+  gap: 3rem;
+  pointer-events: none;
 }
 
-/* selettore corretto per il tuo JSX */
-.start-page .title-container {
-  position: absolute;
-  inset: 0; /* full screen */
-  display: grid;
-  z-index: 1; /* sopra al canvas */
-  pointer-events: none; /* i click passano al background */
+.title-container .rotating-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 10%;
+  background: #f0edcc;
+  color: #021f26;
+  overflow: hidden;
+  font-size: 2rem;
+  margin-left: 30px;
+  font-weight: bolder;
+  font-family: "DayDream";
+}
+
+.title-container .hero-static h1 {
+  font-size: 3rem;
+  background-color: #021f26;
+  font-weight: bolder;
+  font-family: "DayDream";
+  color: #f0edcc;
+
+  padding: 0.25rem 0.75rem;
+  border-radius: 10%;
+}
+.intro-text {
+  background-color: #f0edcc;
+  font-family: "Minecraft";
+  color: #021f26;
+}
+.button-container .start-button {
+  background: #f0edcc;
+  font-size: 2rem;
+  padding: 0.5rem 2rem;
+  font-family: "Minecraft";
+  pointer-events: auto !important;
 }

@@ -1,5 +1,5 @@
-// ImageDropZone.jsx
 import React, { useRef, useState } from "react";
+import "./DropImg.css";
 
 export default function ImageDropZone({
   onFile, // (file: File) => void
@@ -56,21 +56,11 @@ export default function ImageDropZone({
         onDragLeave={() => setIsOver(false)}
         onDrop={onDrop}
         onPaste={onPaste}
-        style={{
-          border: "2px dashed #aaa",
-          borderColor: isOver ? "#555" : "#aaa",
-          borderRadius: 12,
-          padding: 24,
-          textAlign: "center",
-          cursor: "pointer",
-          userSelect: "none",
-        }}
+        className={`dropzone ${isOver ? "is-over" : ""}`}
         aria-label="Carica immagine con drag & drop, click o incolla"
       >
-        <div style={{ fontWeight: 600, marginBottom: 6 }}>
-          Trascina qui un’immagine
-        </div>
-        <div style={{ fontSize: 13, opacity: 0.7 }}>
+        <div className="dropzone-title">Trascina qui un’immagine</div>
+        <div className="dropzone-sub">
           Oppure <u>clicca</u> per selezionare • Puoi anche <u>incollare</u>{" "}
           (Ctrl/⌘+V)
         </div>
@@ -79,15 +69,11 @@ export default function ImageDropZone({
           type="file"
           accept={accept}
           onChange={(e) => handleFiles(e.target.files)}
-          style={{ display: "none" }}
+          className="dropzone-input"
         />
       </div>
 
-      {error && (
-        <div style={{ color: "#b00020", marginTop: 8, fontSize: 13 }}>
-          {error}
-        </div>
-      )}
+      {error && <div className="dropzone-error">{error}</div>}
     </div>
   );
 }

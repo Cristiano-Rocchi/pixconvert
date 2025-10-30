@@ -1,43 +1,82 @@
-// Start.jsx
 import React from "react";
 import PixelBlast from "./ReactBits/PixelBlast";
 import "./Start.css";
-import ASCIIText from "./ReactBits/ASCIIText";
+import RotatingText from "./ReactBits/RotatingText";
+import TargetCursor from "./ReactBits/TargetCursor";
+import { Link } from "react-router-dom";
 
 const Start = () => {
   return (
     <div className="start-page">
+      <TargetCursor
+        targetSelector=".start-button"
+        spinDuration={2}
+        hideDefaultCursor={true}
+      />
+
       <div style={{ position: "relative", minHeight: "100vh" }}>
-        {/* BACKGROUND */}
         <PixelBlast
           style={{ position: "absolute", inset: 0, zIndex: 0 }}
-          variant="circle"
-          pixelSize={6}
-          color="#FF0000"
+          variant="square"
+          pixelSize={4}
+          color="#f0edcc"
           patternScale={3}
-          patternDensity={1.2}
-          pixelSizeJitter={0.5}
+          patternDensity={0.8}
           enableRipples
           rippleSpeed={0.4}
           rippleThickness={0.12}
           rippleIntensityScale={1.5}
-          liquidRadius={1.2}
+          liquidRadius={0.2}
           liquidWobbleSpeed={5}
           speed={0.6}
-          edgeFade={0.25}
-          transparent
+          edgeFade={0.15}
         />
+
         {/* CONTENT */}
-        <div className="title-container">
-          <ASCIIText
-            text="WeLCoMe"
-            enableWaves={true}
-            asciiFontSize={6}
-            color="#FFFFFF"
-            sample={8}
-            textFontSize={80}
-            planeBaseHeight={4}
-          />
+        <div className="d-flex flex-column justify-content-center align-items-center start-container">
+          <div className="title-container">
+            <div className="d-flex justify-content-center align-items-center">
+              <span className="hero-static">
+                <h1>WELCOME</h1>
+              </span>
+
+              <RotatingText
+                texts={[
+                  "Creators",
+                  "Makers",
+                  "Artists",
+                  "Pixel Heads",
+                  "Retro Lovers",
+                  "Converters",
+                  "Friends",
+                  "Pezzidimmerda",
+                ]}
+                mainClassName="rotating-badge"
+                staggerFrom="last"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "-120%" }}
+                staggerDuration={0.1}
+                splitLevelClassName="overflow-hidden"
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                rotationInterval={2500}
+              />
+            </div>
+
+            <div className="intro-text">
+              <h2>
+                Free online image-to-pixel converter. <br />
+                Upload, customize, and download your pixelated artwork in
+                seconds.
+              </h2>
+            </div>
+          </div>
+
+          <div className="button-container">
+            <Link to="/">
+              <button className="start-button">START</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
