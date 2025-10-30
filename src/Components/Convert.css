@@ -168,32 +168,6 @@
     margin-bottom: 6px;
   }
 }
-
-/* ========== Small mobile (≤480px) ========== */
-@media (max-width: 480px) {
-  .anteprima-sect span {
-    font-size: 11px;
-  }
-
-  .export-btn {
-    font-size: 1.1rem;
-    padding: 10px 14px;
-  }
-  .plan-btn,
-  .svuota-btn {
-    font-size: 0.9rem;
-  }
-
-  /* bandiere ancora più compatte */
-  .flag-container {
-    justify-content: center;
-    gap: 6px;
-  }
-  .flag-img {
-    width: 32px;
-    height: 24px;
-  }
-}
 /* ===== Extra small phones (≤480px) — solo CSS, niente JS ===== */
 @media (max-width: 480px) {
   /* layout pagina */
@@ -203,7 +177,7 @@
     padding: 12px 10px;
   }
   .pixel-convert-page .mt-5 {
-    margin-top: 12px !important; /* tolgo il margine grande bootstrap */
+    margin-top: 12px !important;
   }
 
   /* blocco anteprima */
@@ -224,21 +198,19 @@
     display: inline-block;
   }
 
-  /* forza il box canvas ad entrare a schermo (override degli inline style) */
+  /* box canvas a schermo (override inline) */
   .anteprima-sect > div:nth-child(2) {
     width: 100% !important;
-    height: 46vh !important; /* altezza “smart” su mini-phone */
-    max-height: 60vh; /* tetto di sicurezza */
+    height: 46vh !important;
+    max-height: 60vh;
   }
-
-  /* il canvas riempie il box */
   .anteprima-sect canvas {
     width: 100% !important;
     height: 100% !important;
     image-rendering: pixelated;
   }
 
-  /* bandiere già in alto: solo fine-tuning spazi e dimensioni */
+  /* bandiere */
   .flag-container {
     margin-bottom: 12px;
     grid-template-columns: repeat(3, 32px);
@@ -249,20 +221,7 @@
     height: 24px;
   }
 
-  /* bottoni */
-  .export-btn {
-    width: 100%;
-    font-size: 1.15rem;
-    padding: 10px 14px;
-  }
-  .plan-btn,
-  .svuota-btn {
-    width: 100%;
-    padding: 9px 12px;
-    font-size: 0.95rem;
-  }
-
-  /* stack colonne bootstrap 8/3/1 in verticale */
+  /* stack colonne bootstrap 8/3/1 */
   .pixel-convert-page .row > .col-8,
   .pixel-convert-page .row > .col-3,
   .pixel-convert-page .row > .col-1 {
@@ -273,28 +232,22 @@
   .pixel-convert-page .row > .col-1 {
     margin-top: 20px;
   }
-  /* riduciamo dimensioni e spaziatura */
+
+  /* bottoni: versione unica e compatta */
   .svuota-btn,
   .plan-btn,
   .export-btn {
-    width: 90%; /* meno larghi, ma ancora centrati */
+    width: 90%;
     max-width: 260px;
-    font-size: 0.9rem; /* testo più piccolo */
-    padding: 8px 10px; /* meno spazio interno */
+    padding: 8px 10px;
+    font-size: 0.9rem;
     border-radius: 6px;
+    margin-bottom: 6px;
   }
-
-  /* il bottone PNG resta leggermente più visibile */
+  /* PNG leggermente più evidente */
   .export-btn {
     font-size: 1rem;
     font-weight: bold;
-  }
-
-  /* margine verticale tra i bottoni */
-  .svuota-btn,
-  .plan-btn,
-  .export-btn {
-    margin-bottom: 6px;
   }
 
   /* titolo sezione esporta più compatto */
