@@ -73,7 +73,7 @@ const Start = () => {
           </div>
 
           <div className="button-container">
-            <Link to="/">
+            <Link to="/convert">
               <button className="start-button">START</button>
             </Link>
           </div>

@@ -3,15 +3,16 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import DropImg from "./DropImg";
 import SideBar from "./SideBar";
-import "./Home2.css";
+import "./Convert.css";
 import engFlag from "../flag/eng.webp";
 import itaFlag from "../flag/ita.webp";
 import espFlag from "../flag/esp.webp";
+import translations from "./language";
 
 const MAX_EXPORT_SIDE = 8192; // limite “sicuro” per lato
 const EXPORT_CELL_BASE = 20; // cella base desiderata per l’export
 
-const Home2 = () => {
+const Convert = () => {
   const [imgObj, setImgObj] = useState(null);
 
   // celle finali
@@ -69,6 +70,20 @@ const Home2 = () => {
       setTargetW(Math.max(1, Math.round(n * ratio)));
     }
   }
+
+  // lingua corrente
+  const [lang, setLang] = useState(() => {
+    // prova a leggere la lingua salvata, altrimenti IT
+    return localStorage.getItem("lang") || "it";
+  });
+
+  // salva la lingua quando cambia
+  useEffect(() => {
+    localStorage.setItem("lang", lang);
+  }, [lang]);
+
+  // comodo alias per i testi
+  const t = translations[lang] || translations.it;
 
   // box fisso con aspect dell'immagine originale
   useEffect(() => {
@@ -228,28 +243,31 @@ const Home2 = () => {
     [targetW, targetH]
   );
 
+  const isActiveLang = (code) => lang === code;
+
   return (
     <Container fluid className="pixel-convert-page">
-      <Row>
+      <Row className="align-items-start">
+        {/* COLONNA SINISTRA */}
         <Col
           xs={8}
-          className="d-flex justify-content-center align-items-center"
+          className="d-flex mt-5 align-items-center"
           ref={leftPaneRef}
         >
           <div className="dropping-zone" style={{ width: "100%" }}>
             {!imgObj ? (
               <>
-                <h1 className="mb-5 text-center">Upload your image</h1>
-                <DropImg onFile={handleFile} />
+                <h1 className="mb-5 text-center">{t.upload.title}</h1>
+                <DropImg onFile={handleFile} t={t} />
               </>
             ) : (
               <div>
-                {/*  ⬇️ BLOCCO con SEZIONE ESPORTA + ANTEPRIMA  */}
+                {/* BLOCCO ESPORTA + ANTEPRIMA */}
                 <div className="d-flex align-items-end gap-5">
-                  {/* === SEZIONE ESPORTA (trasferita qui) === */}
+                  {/* === SEZIONE ESPORTA === */}
                   <div>
                     <h3 style={{ fontWeight: 600, marginBottom: 8 }}>
-                      Esporta
+                      {t.export.title}
                     </h3>
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                       <button
@@ -257,21 +275,21 @@ const Home2 = () => {
                         onClick={onExportPNG}
                         style={btnStyle(!imgObj)}
                       >
-                        PNG
+                        {t.export.png}
                       </button>
                       <button
                         disabled={!imgObj}
                         onClick={onExportCSV}
                         style={btnStyle(!imgObj)}
                       >
-                        CSV (piano)
+                        {t.export.csv}
                       </button>
                       <button
                         disabled={!imgObj}
                         onClick={onExportJSON}
                         style={btnStyle(!imgObj)}
                       >
-                        JSON
+                        {t.export.json}
                       </button>
                     </div>
                     <div style={{ fontSize: 12, opacity: 0.8, marginTop: 10 }}>
@@ -281,12 +299,12 @@ const Home2 = () => {
                   </div>
 
                   {/* === ANTEPRIMA === */}
-                  <div>
+                  <div className="anteprima-sect">
                     <div className="d-flex justify-content-between">
-                      <span>Anteprima</span>
+                      <span>{t.preview.title}</span>
                       <span>
-                        Sorgente: {imgObj.width}×{imgObj.height}px → Griglia:{" "}
-                        {targetW}×{targetH}
+                        {t.preview.source} {imgObj.width}×{imgObj.height}px →
+                        Griglia: {targetW}×{targetH}
                       </span>
                     </div>
                     <div
@@ -316,68 +334,81 @@ const Home2 = () => {
           </div>
         </Col>
 
+        {/* COLONNA SIDEBAR (fissa, ma invisibile finché non c’è img) */}
         <Col xs={3}>
-          <SideBar
-            targetW={targetW}
-            targetH={targetH}
-            onChangeTargetW={(n) => onChangeTargetW(Number.isNaN(n) ? 1 : n)}
-            onChangeTargetH={(n) => onChangeTargetH(Number.isNaN(n) ? 1 : n)}
-            keepAspect={keepAspect}
-            setKeepAspect={setKeepAspect}
-            showGrid={showGrid}
-            setShowGrid={setShowGrid}
-            gridColor={gridColor}
-            setGridColor={setGridColor}
-            gridOpacity={gridOpacity}
-            setGridOpacity={setGridOpacity}
-            finalSize={finalSize}
-            hasImage={!!imgObj}
-            // i tre handler rimangono passati anche alla sidebar:
-            // se vuoi rimuovere i pulsanti dalla sidebar, te li posso togliere lì.
-            onExportPNG={onExportPNG}
-            onExportCSV={onExportCSV}
-            onExportJSON={onExportJSON}
-          />
+          <div
+            style={{
+              opacity: imgObj ? 1 : 0,
+              pointerEvents: imgObj ? "auto" : "none",
+              transition: "opacity 0.4s",
+            }}
+          >
+            <SideBar
+              targetW={targetW}
+              targetH={targetH}
+              onChangeTargetW={(n) => onChangeTargetW(Number.isNaN(n) ? 1 : n)}
+              onChangeTargetH={(n) => onChangeTargetH(Number.isNaN(n) ? 1 : n)}
+              keepAspect={keepAspect}
+              setKeepAspect={setKeepAspect}
+              showGrid={showGrid}
+              setShowGrid={setShowGrid}
+              gridColor={gridColor}
+              setGridColor={setGridColor}
+              gridOpacity={gridOpacity}
+              setGridOpacity={setGridOpacity}
+              finalSize={finalSize}
+              hasImage={!!imgObj}
+              onExportPNG={onExportPNG}
+              onExportCSV={onExportCSV}
+              onExportJSON={onExportJSON}
+              t={t}
+            />
+          </div>
         </Col>
+
+        {/* COLONNA BANDIERE */}
         <Col xs={1}>
           <div className="flag-container">
             <img
               className="flag-img"
               src={engFlag}
-              alt="English Version"
+              alt="English"
               title="Switch to English version"
+              onClick={() => setLang("en")}
               style={{
-                width: 50,
-                height: 40,
                 cursor: "pointer",
-                marginTop: 10,
-                backgroundColor: "#f0edcc",
+                filter: isActiveLang("en")
+                  ? "brightness(100%)"
+                  : "brightness(70%)",
+                transition: "filter 0.2s",
               }}
             />
             <img
               className="flag-img"
               src={itaFlag}
-              alt="English Version"
-              title="Switch to English version"
+              alt="Italiano"
+              title="Passa alla versione italiana"
+              onClick={() => setLang("it")}
               style={{
-                width: 50,
-                height: 40,
                 cursor: "pointer",
-                marginTop: 10,
-                backgroundColor: "#f0edcc",
+                filter: isActiveLang("it")
+                  ? "brightness(100%)"
+                  : "brightness(70%)",
+                transition: "filter 0.2s",
               }}
             />
             <img
               className="flag-img"
               src={espFlag}
-              alt="English Version"
-              title="Switch to English version"
+              alt="Español"
+              title="Cambiar a la versión en español"
+              onClick={() => setLang("es")}
               style={{
-                width: 50,
-                height: 40,
                 cursor: "pointer",
-                marginTop: 10,
-                backgroundColor: "#f0edcc",
+                filter: isActiveLang("es")
+                  ? "brightness(100%)"
+                  : "brightness(70%)",
+                transition: "filter 0.2s",
               }}
             />
           </div>
@@ -387,7 +418,7 @@ const Home2 = () => {
   );
 };
 
-export default Home2;
+export default Convert;
 
 /* ==== Helpers ==== */
 function drawGrid(ctx, w, h, cell, color = "#000000", opacity = 0.25) {

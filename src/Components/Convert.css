@@ -18,3 +18,14 @@
   justify-content: center;
   align-items: center;
 }
+.flag-img {
+  width: 50px;
+  height: 40px;
+  cursor: "pointer";
+  margin-top: 10px;
+  background-color: #f0edcc;
+}
+
+.anteprima-sect span {
+  font-size: 13px;
+}

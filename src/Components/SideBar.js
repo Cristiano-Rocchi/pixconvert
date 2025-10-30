@@ -1,4 +1,3 @@
-// SideBar.jsx
 import React from "react";
 
 /**
@@ -8,9 +7,7 @@ import React from "react";
  * - showGrid, setShowGrid(bool)
  * - gridColor, setGridColor(str "#RRGGBB")
  * - gridOpacity, setGridOpacity(number 0..1)
- * - finalSize: { pxWidth, pxHeight }
- * - hasImage: boolean
- * - onExportPNG(), onExportCSV(), onExportJSON()
+ * - t: oggetto traduzioni (t.sidebar.*)
  */
 const SideBar = ({
   // dimensioni
@@ -30,6 +27,9 @@ const SideBar = ({
   setGridColor,
   gridOpacity,
   setGridOpacity,
+
+  // 👇 nuova prop
+  t,
 }) => {
   return (
     <aside
@@ -41,16 +41,18 @@ const SideBar = ({
         gap: 16,
       }}
     >
-      <h2 style={{ fontSize: 18, fontWeight: 700 }}>Impostazioni</h2>
+      <h2 style={{ fontSize: 18, fontWeight: 700 }}>{t.sidebar.settings}</h2>
 
       {/* Dimensioni */}
       <section
         style={{ border: "1px solid #eee", borderRadius: 12, padding: 12 }}
       >
-        <h3 style={{ fontWeight: 600, marginBottom: 8 }}>Dimensioni (celle)</h3>
+        <h3 style={{ fontWeight: 600, marginBottom: 8 }}>
+          {t.sidebar.dimensions}
+        </h3>
 
         <label style={{ display: "block", marginBottom: 8 }}>
-          <div style={{ fontSize: 12, opacity: 0.8 }}>Larghezza</div>
+          <div style={{ fontSize: 12, opacity: 0.8 }}>{t.sidebar.width}</div>
           <input
             type="number"
             min={1}
@@ -68,7 +70,7 @@ const SideBar = ({
         </label>
 
         <label style={{ display: "block" }}>
-          <div style={{ fontSize: 12, opacity: 0.8 }}>Altezza</div>
+          <div style={{ fontSize: 12, opacity: 0.8 }}>{t.sidebar.height}</div>
           <input
             type="number"
             min={1}
@@ -98,23 +100,7 @@ const SideBar = ({
             checked={keepAspect}
             onChange={(e) => setKeepAspect(e.target.checked)}
           />
-          <span>Mantieni aspect ratio</span>
-        </label>
-      </section>
-
-      {/* Anteprima (solo toggle griglia) */}
-      <section
-        style={{ border: "1px solid #eee", borderRadius: 12, padding: 12 }}
-      >
-        <h3 style={{ fontWeight: 600, marginBottom: 8 }}>Anteprima</h3>
-
-        <label style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <input
-            type="checkbox"
-            checked={showGrid}
-            onChange={(e) => setShowGrid(e.target.checked)}
-          />
-          <span>Mostra griglia</span>
+          <span>{t.sidebar.keepAspect}</span>
         </label>
       </section>
 
@@ -122,7 +108,7 @@ const SideBar = ({
       <section
         style={{ border: "1px solid #eee", borderRadius: 12, padding: 12 }}
       >
-        <h3 style={{ fontWeight: 600, marginBottom: 8 }}>Griglia</h3>
+        <h3 style={{ fontWeight: 600, marginBottom: 8 }}>{t.sidebar.grid}</h3>
 
         <div
           style={{
@@ -133,8 +119,24 @@ const SideBar = ({
           }}
         >
           <div>
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                marginBottom: 8,
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={showGrid}
+                onChange={(e) => setShowGrid(e.target.checked)}
+              />
+              <span>{t.sidebar.showGrid}</span>
+            </label>
+
             <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 4 }}>
-              Colore
+              {t.sidebar.gridColor}
             </div>
             <input
               type="color"
@@ -150,7 +152,7 @@ const SideBar = ({
                 appearance: "none",
                 background: "transparent",
               }}
-              title="Scegli il colore della griglia"
+              title={t.sidebar.gridColor}
             />
           </div>
 
@@ -168,7 +170,7 @@ const SideBar = ({
               opacity: 0.8,
             }}
           >
-            <span>Opacità</span>
+            <span>{t.sidebar.gridOpacity}</span>
             <span>{Math.round((gridOpacity || 0) * 100)}%</span>
           </div>
           <input

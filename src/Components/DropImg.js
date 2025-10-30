@@ -2,10 +2,11 @@ import React, { useRef, useState } from "react";
 import "./DropImg.css";
 
 export default function ImageDropZone({
-  onFile, // (file: File) => void
-  accept = "image/*", // MIME types accettati
-  maxSizeMB = 20, // limite dimensione
+  onFile,
+  accept = "image/*",
+  maxSizeMB = 20,
   className = "",
+  t,
 }) {
   const [isOver, setIsOver] = useState(false);
   const [error, setError] = useState("");
@@ -17,11 +18,11 @@ export default function ImageDropZone({
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      setError("Accetta solo immagini.");
+      setError(t.upload.onlyImages);
       return;
     }
     if (file.size > maxSizeMB * 1024 * 1024) {
-      setError(`File troppo grande. Max ${maxSizeMB}MB.`);
+      setError(`${t.upload.tooLarge} Max ${maxSizeMB}MB.`);
       return;
     }
     onFile?.(file);
@@ -57,12 +58,11 @@ export default function ImageDropZone({
         onDrop={onDrop}
         onPaste={onPaste}
         className={`dropzone ${isOver ? "is-over" : ""}`}
-        aria-label="Carica immagine con drag & drop, click o incolla"
+        aria-label={t.upload.title}
       >
-        <div className="dropzone-title">Trascina qui un’immagine</div>
+        <div className="dropzone-title">{t.upload.dropHint}</div>
         <div className="dropzone-sub">
-          Oppure <u>clicca</u> per selezionare • Puoi anche <u>incollare</u>{" "}
-          (Ctrl/⌘+V)
+          {t.upload.clickHint} • {t.upload.pasteHint}
         </div>
         <input
           ref={inputRef}
