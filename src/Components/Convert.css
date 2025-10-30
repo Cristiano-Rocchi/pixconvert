@@ -145,6 +145,28 @@
     width: 36px;
     height: 26px;
   }
+  .svuota-btn,
+  .plan-btn,
+  .export-btn {
+    width: 90%; /* meno larghi, ma ancora centrati */
+    max-width: 260px;
+    font-size: 0.9rem; /* testo più piccolo */
+    padding: 8px 10px; /* meno spazio interno */
+    border-radius: 6px;
+  }
+
+  /* il bottone PNG resta leggermente più visibile */
+  .export-btn {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  /* margine verticale tra i bottoni */
+  .svuota-btn,
+  .plan-btn,
+  .export-btn {
+    margin-bottom: 6px;
+  }
 }
 
 /* ========== Small mobile (≤480px) ========== */
