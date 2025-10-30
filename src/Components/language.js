@@ -1,7 +1,7 @@
 const translations = {
   it: {
     upload: {
-      title: "Upload your image",
+      title: "Carica la tua immagine",
       dropHint: "Trascina qui un’immagine",
       clickHint: "Oppure clicca per selezionare",
       pasteHint: "Puoi anche incollare (Ctrl/⌘+V)",
