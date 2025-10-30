@@ -10,3 +10,8 @@
   font-family: "Minecraft";
   src: url("../assets/Minecraft.ttf") format("opentype");
 }
+
+@font-face {
+  font-family: "Monopix";
+  src: url("../assets/monopix.ttf") format("opentype");
+}

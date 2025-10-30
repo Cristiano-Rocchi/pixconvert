@@ -5,7 +5,6 @@ import React from "react";
  * Props attese:
  * - targetW, targetH, onChangeTargetW(n), onChangeTargetH(n)
  * - keepAspect, setKeepAspect(bool)
- * - cellSize, setCellSize(n)
  * - showGrid, setShowGrid(bool)
  * - gridColor, setGridColor(str "#RRGGBB")
  * - gridOpacity, setGridOpacity(number 0..1)
@@ -23,8 +22,6 @@ const SideBar = ({
   setKeepAspect,
 
   // anteprima
-  cellSize,
-  setCellSize,
   showGrid,
   setShowGrid,
 
@@ -33,20 +30,12 @@ const SideBar = ({
   setGridColor,
   gridOpacity,
   setGridOpacity,
-
-  // info/esporta
-  finalSize,
-  hasImage,
-  onExportPNG,
-  onExportCSV,
-  onExportJSON,
 }) => {
   return (
     <aside
       style={{
         width: 320,
         padding: 16,
-        borderRight: "1px solid #eee",
         display: "flex",
         flexDirection: "column",
         gap: 16,
@@ -113,23 +102,11 @@ const SideBar = ({
         </label>
       </section>
 
-      {/* Anteprima */}
+      {/* Anteprima (solo toggle griglia) */}
       <section
         style={{ border: "1px solid #eee", borderRadius: 12, padding: 12 }}
       >
         <h3 style={{ fontWeight: 600, marginBottom: 8 }}>Anteprima</h3>
-
-        <label style={{ display: "block", marginBottom: 6 }}>
-          <div style={{ fontSize: 12, opacity: 0.8 }}>Zoom (px per cella)</div>
-          <input
-            type="range"
-            min={4}
-            max={40}
-            value={cellSize}
-            onChange={(e) => setCellSize(parseInt(e.target.value, 10))}
-            style={{ width: "100%" }}
-          />
-        </label>
 
         <label style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <input
@@ -205,55 +182,8 @@ const SideBar = ({
           />
         </div>
       </section>
-
-      {/* Esporta */}
-      <section
-        style={{ border: "1px solid #eee", borderRadius: 12, padding: 12 }}
-      >
-        <h3 style={{ fontWeight: 600, marginBottom: 8 }}>Esporta</h3>
-
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <button
-            disabled={!hasImage}
-            onClick={onExportPNG}
-            style={btnStyle(!hasImage)}
-          >
-            PNG
-          </button>
-          <button
-            disabled={!hasImage}
-            onClick={onExportCSV}
-            style={btnStyle(!hasImage)}
-          >
-            CSV (piano)
-          </button>
-          <button
-            disabled={!hasImage}
-            onClick={onExportJSON}
-            style={btnStyle(!hasImage)}
-          >
-            JSON
-          </button>
-        </div>
-
-        <div style={{ fontSize: 12, opacity: 0.8, marginTop: 10 }}>
-          <strong>Dimensione finale su wplace:</strong> {finalSize?.pxWidth} ×{" "}
-          {finalSize?.pxHeight} pixel
-        </div>
-      </section>
     </aside>
   );
 };
 
 export default SideBar;
-
-function btnStyle(disabled) {
-  return {
-    padding: "8px 12px",
-    borderRadius: 10,
-    border: "1px solid #ddd",
-    background: disabled ? "#f3f3f3" : "#fff",
-    cursor: disabled ? "not-allowed" : "pointer",
-    boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-  };
-}

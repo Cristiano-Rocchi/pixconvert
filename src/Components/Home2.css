@@ -1,4 +1,20 @@
 .pixel-convert-page {
   background-color: #021f26;
   color: #f0edcc;
+  height: 100vh;
+  font-family: "Monopix";
+}
+
+.dropping-zone {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.flag-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
