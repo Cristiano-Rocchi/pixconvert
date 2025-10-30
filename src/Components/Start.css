@@ -1,6 +1,7 @@
 .start-page {
   position: relative;
   overflow: hidden;
+  border-bottom: 1px solid #f0edcc;
 }
 .start-container {
   position: absolute;

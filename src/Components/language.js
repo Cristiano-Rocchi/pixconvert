@@ -10,7 +10,7 @@ const translations = {
     },
     export: {
       title: "Esporta",
-      png: "PNG",
+      png: "Scarica PNG",
       csv: "CSV (piano)",
       json: "JSON",
       finalSize: "Dimensione finale su wplace:",
@@ -43,7 +43,7 @@ const translations = {
     },
     export: {
       title: "Export",
-      png: "PNG",
+      png: "Download PNG",
       csv: "CSV (flat)",
       json: "JSON",
       finalSize: "Final size on wplace:",
@@ -76,7 +76,7 @@ const translations = {
     },
     export: {
       title: "Exportar",
-      png: "PNG",
+      png: "Descargar PNG",
       csv: "CSV (plano)",
       json: "JSON",
       finalSize: "Tamaño final en wplace:",

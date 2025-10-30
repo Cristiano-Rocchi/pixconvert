@@ -29,3 +29,22 @@
 .anteprima-sect span {
   font-size: 13px;
 }
+
+/* Export buttons */
+.export-btn {
+  background-color: green;
+  font-size: 2rem;
+  color: #f0edcc;
+}
+.plan-btn {
+  background-color: #f0edcc;
+  font-size: 1rem;
+  width: 60%;
+  color: #021f26;
+}
+.svuota-btn {
+  background-color: rgba(255, 0, 0, 0.395);
+  font-size: 1rem;
+  width: 60%;
+  color: #f0edcc;
+}

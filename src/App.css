@@ -15,3 +15,9 @@
   font-family: "Monopix";
   src: url("../assets/monopix.ttf") format("opentype");
 }
+
+.route-stack {
+  position: relative;
+  min-height: 100vh; /* importante per avere l’area di sovrapposizione */
+  overflow: hidden; /* niente scroll-jank durante l’animazione */
+}

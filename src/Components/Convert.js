@@ -71,6 +71,11 @@ const Convert = () => {
     }
   }
 
+  // svuota immagine
+  const handleClear = () => {
+    setImgObj(null);
+  };
+
   // lingua corrente
   const [lang, setLang] = useState(() => {
     // prova a leggere la lingua salvata, altrimenti IT
@@ -265,38 +270,40 @@ const Convert = () => {
                 {/* BLOCCO ESPORTA + ANTEPRIMA */}
                 <div className="d-flex align-items-end gap-5">
                   {/* === SEZIONE ESPORTA === */}
-                  <div>
-                    <h3 style={{ fontWeight: 600, marginBottom: 8 }}>
-                      {t.export.title}
-                    </h3>
-                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                      <button
-                        disabled={!imgObj}
-                        onClick={onExportPNG}
-                        style={btnStyle(!imgObj)}
-                      >
-                        {t.export.png}
-                      </button>
-                      <button
-                        disabled={!imgObj}
-                        onClick={onExportCSV}
-                        style={btnStyle(!imgObj)}
-                      >
-                        {t.export.csv}
-                      </button>
-                      <button
-                        disabled={!imgObj}
-                        onClick={onExportJSON}
-                        style={btnStyle(!imgObj)}
-                      >
-                        {t.export.json}
-                      </button>
-                    </div>
-                    <div style={{ fontSize: 12, opacity: 0.8, marginTop: 10 }}>
-                      <strong>Dimensione finale su wplace:</strong>{" "}
-                      {finalSize?.pxWidth} × {finalSize?.pxHeight} pixel
-                    </div>
+
+                  <div className="d-flex flex-column align-items-center gap-4">
+                    <button
+                      className="svuota-btn"
+                      disabled={!imgObj}
+                      onClick={handleClear}
+                    >
+                      Svuota
+                    </button>
+                    <button
+                      className="plan-btn"
+                      disabled={!imgObj}
+                      onClick={onExportCSV}
+                    >
+                      {t.export.csv}
+                    </button>
+                    <button
+                      className="plan-btn"
+                      disabled={!imgObj}
+                      onClick={onExportJSON}
+                    >
+                      {t.export.json}
+                    </button>
+                    <button
+                      className="export-btn"
+                      disabled={!imgObj}
+                      onClick={onExportPNG}
+                    >
+                      {t.export.png}
+                    </button>
                   </div>
+                  <div
+                    style={{ fontSize: 12, opacity: 0.8, marginTop: 10 }}
+                  ></div>
 
                   {/* === ANTEPRIMA === */}
                   <div className="anteprima-sect">
@@ -464,14 +471,4 @@ function downloadText(text, filename) {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-}
-function btnStyle(disabled) {
-  return {
-    padding: "8px 12px",
-    borderRadius: 10,
-    border: "1px solid #ddd",
-    background: disabled ? "#f3f3f3" : "#fff",
-    cursor: disabled ? "not-allowed" : "pointer",
-    boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-  };
 }
