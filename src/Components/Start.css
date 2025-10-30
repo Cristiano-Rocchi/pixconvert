@@ -51,3 +51,89 @@
   font-family: "Minecraft";
   pointer-events: auto !important;
 }
+
+/* 1) Font e dimensioni più fluidi (senza media query) */
+.title-container .hero-static h1 {
+  /* 3rem fissi -> clamp fluido */
+  font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.title-container .rotating-badge {
+  /* 2rem fissi -> clamp fluido */
+  font-size: clamp(1rem, 4.5vw, 2rem);
+  margin-left: 1.2rem; /* riduci un po' su schermi medi */
+}
+
+.intro-text {
+  /* migliora leggibilità e contenimento */
+  max-width: 60rem;
+  margin-inline: auto;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  line-height: 1.35;
+}
+
+/* 2) Permetti al titolo di andare a capo quando serve */
+.title-container > .d-flex {
+  flex-wrap: wrap; /* consenti wrap tra WELCOME e badge */
+  gap: 0.75rem 1rem; /* spazio armonico */
+}
+
+/* 3) iPad / tablet */
+@media (max-width: 1024px) {
+  .start-container {
+    gap: 6rem; /* da 10rem a 6rem */
+  }
+  .title-container {
+    gap: 2rem;
+  }
+  .title-container .rotating-badge {
+    margin-left: 0.75rem; /* ancora un filo meno */
+  }
+  .button-container .start-button {
+    font-size: clamp(1.2rem, 2.4vw, 1.6rem);
+    padding: 0.6rem 1.6rem;
+  }
+}
+
+/* 4) Telefono */
+@media (max-width: 600px) {
+  .start-container {
+    gap: 3rem; /* compatta ancora */
+  }
+  .title-container {
+    gap: 1.25rem;
+  }
+  .title-container .rotating-badge {
+    margin-left: 0; /* niente offset su mobile */
+    border-radius: 0.6rem;
+  }
+  .intro-text {
+    padding: 0.6rem 0.8rem;
+    margin-inline: 1rem;
+    font-size: 0.95rem; /* leggermente più piccolo */
+  }
+  .button-container .start-button {
+    width: min(20rem, 85vw); /* pulsante largo e touch-friendly */
+    font-size: 1.3rem;
+    padding: 0.7rem 1.2rem;
+  }
+}
+
+/* 5) Safe-area (notch iOS) per il bottone in basso */
+@supports (padding: max(0px)) {
+  .button-container {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* 6) Accessibilità: riduci effetti su utenti con ridotta animazione */
+@media (prefers-reduced-motion: reduce) {
+  .start-page,
+  .start-container,
+  .title-container {
+    scroll-behavior: auto;
+    transition: none !important;
+    animation: none !important;
+  }
+}

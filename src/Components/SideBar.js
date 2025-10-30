@@ -1,4 +1,5 @@
 import React from "react";
+import "./SideBar.css";
 
 /**
  * Props attese:
@@ -28,73 +29,44 @@ const SideBar = ({
   gridOpacity,
   setGridOpacity,
 
-  // 👇 nuova prop
+  // traduzioni
   t,
 }) => {
   return (
-    <aside
-      style={{
-        width: 320,
-        padding: 16,
-        display: "flex",
-        flexDirection: "column",
-        gap: 16,
-      }}
-    >
-      <h2 style={{ fontSize: 18, fontWeight: 700 }}>{t.sidebar.settings}</h2>
+    <aside className="sb">
+      <h2 className="sb__title">{t.sidebar.settings}</h2>
 
       {/* Dimensioni */}
-      <section
-        style={{ border: "1px solid #eee", borderRadius: 12, padding: 12 }}
-      >
-        <h3 style={{ fontWeight: 600, marginBottom: 8 }}>
-          {t.sidebar.dimensions}
-        </h3>
+      <section className="sb__section">
+        <h3 className="sb__section-title">{t.sidebar.dimensions}</h3>
 
-        <label style={{ display: "block", marginBottom: 8 }}>
-          <div style={{ fontSize: 12, opacity: 0.8 }}>{t.sidebar.width}</div>
+        <label className="sb__label sb__label--block">
+          <div className="sb__hint">{t.sidebar.width}</div>
           <input
+            className="sb__input"
             type="number"
             min={1}
             value={targetW}
             onChange={(e) =>
               onChangeTargetW(parseInt(e.target.value || "1", 10))
             }
-            style={{
-              width: "100%",
-              padding: 8,
-              borderRadius: 10,
-              border: "1px solid #ddd",
-            }}
           />
         </label>
 
-        <label style={{ display: "block" }}>
-          <div style={{ fontSize: 12, opacity: 0.8 }}>{t.sidebar.height}</div>
+        <label className="sb__label sb__label--block">
+          <div className="sb__hint">{t.sidebar.height}</div>
           <input
+            className="sb__input"
             type="number"
             min={1}
             value={targetH}
             onChange={(e) =>
               onChangeTargetH(parseInt(e.target.value || "1", 10))
             }
-            style={{
-              width: "100%",
-              padding: 8,
-              borderRadius: 10,
-              border: "1px solid #ddd",
-            }}
           />
         </label>
 
-        <label
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            marginTop: 8,
-          }}
-        >
+        <label className="sb__row sb__row--checkbox">
           <input
             type="checkbox"
             checked={keepAspect}
@@ -105,28 +77,12 @@ const SideBar = ({
       </section>
 
       {/* Griglia */}
-      <section
-        style={{ border: "1px solid #eee", borderRadius: 12, padding: 12 }}
-      >
-        <h3 style={{ fontWeight: 600, marginBottom: 8 }}>{t.sidebar.grid}</h3>
+      <section className="sb__section">
+        <h3 className="sb__section-title">{t.sidebar.grid}</h3>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "auto 1fr",
-            gap: 12,
-            alignItems: "center",
-          }}
-        >
+        <div className="sb__gridrow">
           <div>
-            <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                marginBottom: 8,
-              }}
-            >
+            <label className="sb__row sb__row--checkbox">
               <input
                 type="checkbox"
                 checked={showGrid}
@@ -135,52 +91,32 @@ const SideBar = ({
               <span>{t.sidebar.showGrid}</span>
             </label>
 
-            <div style={{ fontSize: 12, opacity: 0.8, marginBottom: 4 }}>
-              {t.sidebar.gridColor}
-            </div>
+            <div className="sb__hint sb__hint--mb4">{t.sidebar.gridColor}</div>
             <input
+              className="sb__color"
               type="color"
               value={gridColor}
               onChange={(e) => setGridColor(e.target.value)}
-              style={{
-                width: 48,
-                height: 32,
-                padding: 0,
-                border: "1px solid #ddd",
-                borderRadius: 8,
-                cursor: "pointer",
-                appearance: "none",
-                background: "transparent",
-              }}
               title={t.sidebar.gridColor}
             />
           </div>
 
-          <div style={{ justifySelf: "end", fontSize: 12, opacity: 0.7 }}>
-            {gridColor?.toUpperCase()}
-          </div>
+          <div className="sb__hex">{gridColor?.toUpperCase()}</div>
         </div>
 
-        <div style={{ marginTop: 10 }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              fontSize: 12,
-              opacity: 0.8,
-            }}
-          >
+        <div className="sb__range-wrap">
+          <div className="sb__range-head">
             <span>{t.sidebar.gridOpacity}</span>
             <span>{Math.round((gridOpacity || 0) * 100)}%</span>
           </div>
           <input
+            className="sb__range"
             type="range"
             min={0}
             max={1}
             step={0.01}
             value={gridOpacity}
             onChange={(e) => setGridOpacity(parseFloat(e.target.value))}
-            style={{ width: "100%" }}
           />
         </div>
       </section>

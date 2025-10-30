@@ -37,3 +37,42 @@
   margin-top: 8px;
   font-size: 13px;
 }
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .dropzone {
+    max-width: 300px;
+    padding: 20px;
+  }
+
+  .dropzone-title {
+    font-size: 1rem;
+  }
+
+  .dropzone-sub {
+    font-size: 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .dropzone {
+    max-width: 90%;
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  .dropzone-title {
+    font-size: 0.95rem;
+  }
+
+  .dropzone-sub {
+    font-size: 11px;
+  }
+
+  .dropzone-error {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 6px;
+  }
+}

@@ -48,3 +48,235 @@
   width: 60%;
   color: #f0edcc;
 }
+/* ========== Desktop largo → Tablet (≤1200px) ========== */
+@media (max-width: 1200px) {
+  .export-btn {
+    font-size: 1.6rem;
+  }
+  .plan-btn,
+  .svuota-btn {
+    width: 70%;
+  }
+  .flag-img {
+    width: 44px;
+    height: 34px;
+  }
+}
+/* ========== Tablet (≤992px) ========== */
+@media (max-width: 992px) {
+  .anteprima-sect span {
+    font-size: 12px;
+  }
+
+  .plan-btn,
+  .svuota-btn {
+    width: 80%;
+  }
+
+  /* bandiere in alto, compatte e centrate */
+  .flag-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .flag-img {
+    width: 40px;
+    height: 30px;
+    margin-top: 0;
+  }
+}
+
+/* ========== Mobile (≤768px) ========== */
+@media (max-width: 768px) {
+  .pixel-convert-page {
+    height: auto;
+    min-height: 100vh;
+    padding: 16px 12px;
+  }
+
+  /* stack colonne */
+  .pixel-convert-page .row > .col-8,
+  .pixel-convert-page .row > .col-3,
+  .pixel-convert-page .row > .col-1 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* spaziatura verticale */
+  .pixel-convert-page .row > .col-3,
+  .pixel-convert-page .row > .col-1 {
+    margin-top: 24px;
+  }
+
+  .dropping-zone {
+    margin-top: 8px;
+  }
+
+  /* bottoni touch-friendly */
+  .export-btn {
+    width: 100%;
+    font-size: 1.25rem;
+    padding: 12px 16px;
+  }
+  .plan-btn,
+  .svuota-btn {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+
+  /* bandiere più piccole e centrali */
+  .pixel-convert-page .row > .col-1 {
+    order: -1; /* sposta sopra */
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .flag-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .flag-img {
+    width: 36px;
+    height: 26px;
+  }
+}
+
+/* ========== Small mobile (≤480px) ========== */
+@media (max-width: 480px) {
+  .anteprima-sect span {
+    font-size: 11px;
+  }
+
+  .export-btn {
+    font-size: 1.1rem;
+    padding: 10px 14px;
+  }
+  .plan-btn,
+  .svuota-btn {
+    font-size: 0.9rem;
+  }
+
+  /* bandiere ancora più compatte */
+  .flag-container {
+    justify-content: center;
+    gap: 6px;
+  }
+  .flag-img {
+    width: 32px;
+    height: 24px;
+  }
+}
+/* ===== Extra small phones (≤480px) — solo CSS, niente JS ===== */
+@media (max-width: 480px) {
+  /* layout pagina */
+  .pixel-convert-page {
+    height: auto;
+    min-height: 100vh;
+    padding: 12px 10px;
+  }
+  .pixel-convert-page .mt-5 {
+    margin-top: 12px !important; /* tolgo il margine grande bootstrap */
+  }
+
+  /* blocco anteprima */
+  .anteprima-sect {
+    width: 100%;
+  }
+
+  /* header "Anteprima | Sorgente → Griglia" più compatto */
+  .anteprima-sect .d-flex {
+    gap: 8px;
+  }
+  .anteprima-sect .d-flex span {
+    font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 48%;
+    display: inline-block;
+  }
+
+  /* forza il box canvas ad entrare a schermo (override degli inline style) */
+  .anteprima-sect > div:nth-child(2) {
+    width: 100% !important;
+    height: 46vh !important; /* altezza “smart” su mini-phone */
+    max-height: 60vh; /* tetto di sicurezza */
+  }
+
+  /* il canvas riempie il box */
+  .anteprima-sect canvas {
+    width: 100% !important;
+    height: 100% !important;
+    image-rendering: pixelated;
+  }
+
+  /* bandiere già in alto: solo fine-tuning spazi e dimensioni */
+  .flag-container {
+    margin-bottom: 12px;
+    grid-template-columns: repeat(3, 32px);
+    gap: 8px;
+  }
+  .flag-img {
+    width: 32px;
+    height: 24px;
+  }
+
+  /* bottoni */
+  .export-btn {
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 10px 14px;
+  }
+  .plan-btn,
+  .svuota-btn {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 0.95rem;
+  }
+
+  /* stack colonne bootstrap 8/3/1 in verticale */
+  .pixel-convert-page .row > .col-8,
+  .pixel-convert-page .row > .col-3,
+  .pixel-convert-page .row > .col-1 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .pixel-convert-page .row > .col-3,
+  .pixel-convert-page .row > .col-1 {
+    margin-top: 20px;
+  }
+  /* riduciamo dimensioni e spaziatura */
+  .svuota-btn,
+  .plan-btn,
+  .export-btn {
+    width: 90%; /* meno larghi, ma ancora centrati */
+    max-width: 260px;
+    font-size: 0.9rem; /* testo più piccolo */
+    padding: 8px 10px; /* meno spazio interno */
+    border-radius: 6px;
+  }
+
+  /* il bottone PNG resta leggermente più visibile */
+  .export-btn {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  /* margine verticale tra i bottoni */
+  .svuota-btn,
+  .plan-btn,
+  .export-btn {
+    margin-bottom: 6px;
+  }
+
+  /* titolo sezione esporta più compatto */
+  .d-flex.align-items-end.gap-5 {
+    gap: 1rem !important;
+  }
+}
